@@ -10,6 +10,11 @@
         <ion-toolbar>
           <ion-title size="large">Tab 1</ion-title>
         </ion-toolbar>
+        <div v-if=storeScan.scan_response>
+          <ion-list v-for="product in storeScan.scan_response" :key="product.code">
+            <ion-item>{{ product.code }}</ion-item>
+          </ion-list>
+        </div>
       </ion-header>
     
       <ExploreContainer name="Tab 1 page" />
@@ -17,13 +22,11 @@
   </ion-page>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
-import ExploreContainer from '@/components/ExploreContainer.vue';
+<script setup>
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem } from '@ionic/vue';
+import { useStoreScan } from '@/stores/storeScan.js'
 
-export default  defineComponent({
-  name: 'Tab1Page',
-  components: { ExploreContainer, IonHeader, IonToolbar, IonTitle, IonContent, IonPage }
-});
+const storeScan = useStoreScan()
+
+
 </script>

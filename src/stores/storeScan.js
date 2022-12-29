@@ -10,7 +10,7 @@ const config = {
 }
 
 
-export const useStoreAuth = defineStore('storeAuth', {
+export const useStoreScan = defineStore('storeScan', {
   state: () => {
     return {
       scan_response: [],
@@ -19,7 +19,7 @@ export const useStoreAuth = defineStore('storeAuth', {
   actions: {
     scanProduct(barcode) {
       console.log("started")
-        HTTP.get(`scans/get_product_info/${barcode}`, config)
+        HTTP.get(`Scans/get_product_info?barcode=${barcode}`, config)
           .then((response) => {
             this.scan_response = response.data
             console.log(this.scan_response)

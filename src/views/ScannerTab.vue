@@ -33,7 +33,7 @@ const config = {
     
   },
 }
-// const storeScan = useStoreScan()
+ const storeScan = useStoreScan()
 
 export default defineComponent({
   name: 'ScannerTab',
@@ -53,7 +53,7 @@ export default defineComponent({
       console.log(a, b, c);
       this.text = a;
       console.log('almost')
-      scan()
+      storeScan.scanProduct(a)
       console.log('passed')
       if (this.id) clearTimeout(this.id);
       this.id = setTimeout(() => {
@@ -65,22 +65,10 @@ export default defineComponent({
     onLoaded() {
       console.log("load");
     },
-    
     }
   });
 
-  scan(() => {
-      console.log("started")
-      HTTP.get(`scans/get_product_info/${this.text}`, config)
-        .then((response) => {
-          this.scan_response = response.data
-          console.log(this.scan_response)
-        })
-        .catch((error) => {
-          alert(error)
-          console.log(error)
-        })
-  })
+  
 </script>
 
 <style scoped>
