@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createApp, markRaw } from 'vue'
 import App from './App.vue'
 import router from './router';
 
@@ -26,6 +26,11 @@ import './theme/variables.css';
 /* Pinia Store */
 import { createPinia } from 'pinia'
 const pinia = createPinia()
+
+/* Using router everywhere */
+pinia.use(({ store }) => {
+  store.router = markRaw(router)
+})
 
 const app = createApp(App)
   .use(IonicVue)

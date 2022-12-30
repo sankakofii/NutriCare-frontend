@@ -29,8 +29,13 @@ const routes: Array<RouteRecordRaw> = [
       }
       ,
       {
-        path: 'product/:id',
+        path: 'product/:barcode',
         component: () => import('@/views/ProductPage.vue')
+      }
+      ,
+      {
+        path: 'login',
+        component: () => import('@/views/LoginPage.vue')
       }
     ]
   }
