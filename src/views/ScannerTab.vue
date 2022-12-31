@@ -1,12 +1,13 @@
 <template>
   <ion-page>
     <ion-content>
-      <div v-if="!stop">
-        <StreamBarcodeReader
-            @decode="(a, b, c) => onDecode(a, b, c)"
-            @loaded="() => onLoaded()"
-        ></StreamBarcodeReader>
-      </div>
+      <div class="loading-text" v-if="load"><p class="loading-text-vertical">Loading...</p></div>
+        <div v-if="!stop">
+          <StreamBarcodeReader
+              @decode="(a, b, c) => onDecode(a, b, c)"
+              @loaded="() => onLoaded()"
+          ></StreamBarcodeReader>
+        </div>
     </ion-content>
     
   </ion-page>
@@ -22,9 +23,9 @@ import { useStoreScan } from '@/stores/storeScan.js'
 const text = ref("");
 const stop = ref(false)
 const id = ref(null)
+const load = ref(true)
 
- const storeScan = useStoreScan()
-
+const storeScan = useStoreScan()
 
 const onDecode = (a, b, c) => {
   console.log(a, b, c);
@@ -42,6 +43,7 @@ const onDecode = (a, b, c) => {
 }
 
 const onLoaded = () => {
+  load.value = false;
   console.log("load");
 }
 
@@ -49,5 +51,17 @@ const onLoaded = () => {
 </script>
 
 <style scoped>
+  .loading-text {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .loading-text-vertical{
+    position: relative;
+    top: 50%;
+  }
 </style>
 

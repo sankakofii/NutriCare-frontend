@@ -47,6 +47,7 @@ export const useStoreScan = defineStore('storeScan', {
       HTTP.get(`Scans/scan_histories_of_account?account_id=${account_id}`, config)
         .then((response) => {
           this.scanList = response.data
+          console.log(this.scanList)
         })
         .catch((error) => {
           alert(error)

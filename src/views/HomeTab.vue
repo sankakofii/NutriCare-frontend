@@ -2,14 +2,11 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Home</ion-title>
+        <ion-title>Scanned Products</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Products</ion-title>
-        </ion-toolbar>
         <div v-if=storeScan.scanList>
           <ion-list v-for="product in storeScan.scanList" :key="product.code">
             <div class="item">
@@ -31,12 +28,13 @@
 <script setup>
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonButton, onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
 import { useStoreScan } from '@/stores/storeScan.js'
+import { useStoreAccount } from '@/stores/storeAccount'
 
 const storeScan = useStoreScan()
+const storeAccount = useStoreAccount()
 
 onIonViewWillEnter(( ) => {
-  storeScan.getScannedProductsByAccountId(2)
-  //change to dynamic id
+  storeScan.getScannedProductsByAccountId(storeAccount.account.accountId)
 })
 
 onIonViewWillLeave(() => {

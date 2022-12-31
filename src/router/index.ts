@@ -5,10 +5,10 @@ import TabsPage from '../views/TabsPage.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/tabs/home'
+    redirect: '/login'
   },
   {
-    path: '/tabs/',
+    path: '/',
     component: TabsPage,
     children: [
       {
@@ -16,28 +16,27 @@ const routes: Array<RouteRecordRaw> = [
         redirect: '/tabs/home'
       },
       {
-        path: 'home',
+        path: '/tabs/home',
         component: () => import('@/views/HomeTab.vue')
       },
       {
-        path: 'scanner',
+        path: '/tabs/scanner',
         component: () => import('@/views/ScannerTab.vue')
       },
       {
-        path: 'account',
+        path: '/tabs/account',
         component: () => import('@/views/AccountTab.vue')
       }
       ,
       {
-        path: 'product/:barcode',
+        path: '/tabs/product/:barcode',
         component: () => import('@/views/ProductPage.vue')
       }
-      ,
-      {
-        path: 'login',
-        component: () => import('@/views/LoginPage.vue')
-      }
     ]
+  },
+  {
+    path: '/login',
+    component: () => import('@/views/LoginPage.vue')
   }
 ]
 
