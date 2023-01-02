@@ -20,6 +20,9 @@
             </div>
           </ion-list>
         </div>
+        <div v-else class="else-box">
+          <h1 class="else-text">Here you will be able to see your scanned products!</h1>
+        </div>
       </ion-header>
     </ion-content>
   </ion-page>
@@ -74,6 +77,11 @@ onIonViewWillLeave(() => {
 
   .scan-time {
     font-size: 10px;
+  }
+
+  .else-box {
+    width: 100%;
+    height: 100%;
   }
 
 </style>

@@ -24,7 +24,7 @@
             <div class="allergens-header">
               <h2 class="account-aller-into-header">Allergies</h2>
               <div class="account-aller-into-header-icon-box">
-                <ion-icon class="account-aller-into-header-icon" :icon="create" />
+                <ion-icon class="account-aller-into-header-icon" :icon="create" @click="allergyIconFunc()" />
               </div>
             </div>
             <ion-list v-for="allergen in storeAccount.account.allergies" :key="allergen.type">
@@ -38,7 +38,7 @@
             <div class="allergens-header">
               <h2 class="account-aller-into-header">Intolerances</h2>
               <div class="account-aller-into-header-icon-box">
-                <ion-icon class="account-aller-into-header-icon" :icon="create" />
+                <ion-icon class="account-aller-into-header-icon" :icon="create" @click="intoleranceIconFunc()" />
               </div>
             </div>
               <ion-list v-for="intolerance in storeAccount.account.intolerances" :key="intolerance.type">
@@ -58,8 +58,18 @@ import { defineComponent } from 'vue';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
 import { create } from 'ionicons/icons';
 import { useStoreAccount } from '@/stores/storeAccount'
+import { useRouter } from 'vue-router';
 
 const storeAccount = useStoreAccount()
+const route = useRouter()
+
+const allergyIconFunc = () => {
+  route.push('/tabs/account/allergies')
+}
+
+const intoleranceIconFunc = () => {
+  route.push('/tabs/account/intolerances')
+}
 
 </script>
 

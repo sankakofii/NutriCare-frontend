@@ -18,10 +18,13 @@
             <div class="input">
               <ion-item>
                 <ion-label position="floating">Password</ion-label>
-                <ion-input v-model="credentials.password" placeholder="Enter text"></ion-input>
+                <ion-input type="password" v-model="credentials.password" placeholder="Enter text"></ion-input>
               </ion-item>
             </div>
-            <ion-button class="login-button" @click="signIn">Log In</ion-button>
+            <div class="login-button-link-box">
+              <ion-button class="login-button" @click="signIn">Log In</ion-button>
+              <router-link :to="`/register/form`" class="register-link">I don't have an account.</router-link>
+            </div>
           </div>
         </ion-content>
     </ion-page>
@@ -65,24 +68,32 @@ const signIn = () => {
   justify-content: center;
 }
 
-.login-button {
-  position: relative;
-  margin-top: 20px;
-  width: 50%;
-  position: relative;
-  top: 35%;
-}
-
 .input {
-  width: 90%;
-  padding-left: 15px;
+  width: 100%;
+  padding-left: 5%;
+  padding-right: 5%;
   position: relative;
-  top: 30%;
+  top: 25%;
 }
 
 .logo-box {
   padding: 15%;
   position: relative;
   top: 20%;
+}
+
+.login-button-link-box {
+  position: relative;
+  display: inline;
+  top: 30%;
+}
+
+.login-button {
+  width: 45%;
+}
+
+.register-link {
+  display: block;
+  padding: 5%;
 }
 </style> 

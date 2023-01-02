@@ -19,6 +19,7 @@ export const useStoreAuth = defineStore('storeAuth', {
     state: () => {
       return {
         user: useStorage('user', []),
+        registerData: {}
       }
     },
     actions: {
@@ -39,7 +40,16 @@ export const useStoreAuth = defineStore('storeAuth', {
             })
             .catch(function (error) {
                 console.log(error)
-              })
+            })
+      },
+      register() {
+        console.log("registering...")
+      },
+      sendVerificationSMS() {
+        console.log("sending SMS...")
+      },
+      verifyCode() {
+        console.log("verifying the code...")
       }
     }
   })

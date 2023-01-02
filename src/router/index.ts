@@ -8,28 +8,35 @@ const routes: Array<RouteRecordRaw> = [
     redirect: '/login'
   },
   {
-    path: '/',
+    path: '/tabs',
     component: TabsPage,
     children: [
       {
-        path: '',
+        path: '/',
         redirect: '/tabs/home'
       },
       {
-        path: '/tabs/home',
+        path: 'home',
         component: () => import('@/views/HomeTab.vue')
       },
       {
-        path: '/tabs/scanner',
+        path: 'scanner',
         component: () => import('@/views/ScannerTab.vue')
       },
       {
-        path: '/tabs/account',
+        path: 'account',
         component: () => import('@/views/AccountTab.vue')
-      }
-      ,
+      },
       {
-        path: '/tabs/product/:barcode',
+        path: 'account/allergies',
+        component: () => import('@/views/AccountAllergyTab.vue')
+      },
+      {
+        path: 'account/intolerances',
+        component: () => import('@/views/AccountIntoleranceTab.vue')
+      },
+      {
+        path: 'product/:barcode',
         component: () => import('@/views/ProductPage.vue')
       }
     ]
@@ -37,7 +44,33 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
     component: () => import('@/views/LoginPage.vue')
-  }
+  },
+  {
+    path: '/register',
+    component: () => import('@/views/register/RegisterPage.vue'),
+    children: [
+      {
+        path: '',
+        redirect: '/register/form'
+      },
+      {
+        path: 'form',
+        component: () => import('@/views/register/RegisterFormPage.vue')
+      },
+      {
+        path: 'phone',
+        component: () => import('@/views/register/RegisterPhonePage.vue')
+      },
+      {
+        path: 'phone/verification',
+        component: () => import('@/views/register/RegisterPhoneVerificationPage.vue')
+      },
+      {
+        path: 'final',
+        component: () => import('@/views/register/RegisterFinalPage.vue')
+      }
+    ]
+  }  
 ]
 
 const router = createRouter({
