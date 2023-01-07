@@ -16,7 +16,7 @@
             <div class="input">
               <ion-item>
                 <ion-label position="floating">Code</ion-label>
-                <ion-input type="text" v-model="verificationCode" placeholder="Enter text"></ion-input>
+                <ion-input type="text" v-model="storeAuth.registerData.verificationCode" placeholder="Enter text"></ion-input>
               </ion-item>
             </div>            
           </div>
@@ -24,7 +24,7 @@
         <ion-footer>
             <div class="register-button-link-box">
               <ion-button class="register-next-button" :router-link="`/register/phone`">Back</ion-button>
-              <ion-button class="register-next-button" :router-link="`/register/final`" @click="storeAuth.verifyCode()">Verify</ion-button>
+              <ion-button class="register-next-button" @click="verifyPhoneCode()">Verify</ion-button>
             </div>
         </ion-footer>
     </ion-page>
@@ -34,9 +34,19 @@
 import { IonPage, IonContent, IonInput, IonLabel, IonButton, IonImg, IonItem, IonFooter, onIonViewWillLeave } from '@ionic/vue';
 import { useStoreAuth } from '@/stores/storeAuth'
 import {ref} from "vue"
+import {useRouter} from "vue-router"
 
 const storeAuth = useStoreAuth()
 const verificationCode = ref("")
+const router = useRouter()
+const verifyPhoneCode = ()=>{
+  storeAuth.verifyCode()
+  /*if(storeAuth.responseMessage == 'approved'){
+    router.push('/register/final')
+  } else{
+    console.log('else')
+  }*/
+  }
 </script>
 
 <style lang="scss" scoped>
