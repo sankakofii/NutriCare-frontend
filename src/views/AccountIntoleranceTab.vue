@@ -28,7 +28,6 @@
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonButton, IonButtons, IonModal, IonLabel, alertController, onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
 import { useStoreAccount } from '@/stores/storeAccount'
 import { add } from 'ionicons/icons'
-import { ref } from 'vue';
 
 
 const storeAccount = useStoreAccount()
@@ -70,16 +69,25 @@ const presentAlert = async () => {
 </script>
 
 <style scoped>
-.item {
-    display: flex;
-    justify-content: space-between;
-}
-
 .toolbar-add-icon-box {
   float: right;
 }
 
 .toolbar-add-icon {
   align-content: right;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    background: rgb(51, 49, 49);
+}
+
+.item-type {
+    padding-left: 10%;
+}
+
+.item-delete-button {
+    padding-right: 10%;
 }
 </style>

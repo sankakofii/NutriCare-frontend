@@ -37,6 +37,11 @@ import { reactive, ref } from 'vue'
 
 const storeAuth = useStoreAuth()
 
+const credentialsInitial = reactive({
+  email: '',
+  password: '',
+})
+
 const credentials = reactive({
   email: '',
   password: '',
@@ -53,6 +58,7 @@ const signIn = () => {
     errorMessage.value = 'You have to fill all the fields'
   } else {
     storeAuth.loginUser(credentials)
+    Object.assign(credentials, credentialsInitial)
   }
 }
 

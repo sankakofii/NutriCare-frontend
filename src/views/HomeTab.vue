@@ -37,11 +37,13 @@ const storeScan = useStoreScan()
 const storeAccount = useStoreAccount()
 
 onIonViewWillEnter(( ) => {
-  storeScan.getScannedProductsByAccountId(storeAccount.account.accountId)
+  storeScan.getScannedProductsByAccountId()
+  storeAccount.getAccountById()
 })
 
 onIonViewWillLeave(() => {
-  storeScan.scanList = []
+  storeScan.scanList = [],
+  storeAccount.getAccountById()
 })
 
 </script>

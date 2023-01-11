@@ -1,8 +1,8 @@
 <template>
   <ion-page>
-    <ion-content>
+    <ion-content :fullscreen="true">
       <div class="loading-text" v-if="load"><p class="loading-text-vertical">Loading...</p></div>
-        <div v-if="!stop">
+        <div class="scanner" v-if="!stop">
           <StreamBarcodeReader
               @decode="(a, b, c) => onDecode(a, b, c)"
               @loaded="() => onLoaded()"
@@ -62,6 +62,11 @@ const onLoaded = () => {
   .loading-text-vertical{
     position: relative;
     top: 50%;
+  }
+
+  .scanner {
+    width: 100%;
+    height: 100%;
   }
 </style>
 

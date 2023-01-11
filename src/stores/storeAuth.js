@@ -3,25 +3,18 @@ import { useStorage } from '@vueuse/core'
 
 import { HTTP } from '@/api/config.js'
 
-import { useStoreAccount } from '@/stores/storeAccount.js'
-import { useStoreScan } from './storeScan'
+// import { useStoreAccount } from '@/stores/storeAccount.js'
+// import { useStoreScan } from '@/stores/storeScan.js'
 
-const storeAccount = useStoreAccount()
-const storeScan = useStoreScan()
 
-const config = {
-  headers: {
-    NCApiKey: `9753a148-1261-4238-8dfc-89a91d834f4e`
-  },
-}
-
-HTTP.defaults.headers['NCApiKey'] = process.env.NC_APP_API_KEY
+// const storeAccount = useStoreAccount()
+// const storeScan = useStoreScan()
 
 
 export const useStoreAuth = defineStore('storeAuth', {
     state: () => {
       return {
-        user: useStorage('user', []),
+        user: {},
         registerData: {},
         responseMessage: {}
       }
@@ -31,16 +24,22 @@ export const useStoreAuth = defineStore('storeAuth', {
         HTTP.post('Auth/login', {
             email: credentials.email,
             password: credentials.password
-        }, config)
+        })
             .then((response) => {
-                console.log(response)
-                console.log(response.data)
-                this.user = {
-                    email: response.data.email
+                // console.log(response)
+                // console.log(response.data)
+                // storeAccount.account = response.data.account
+
+                this.user = { 
+                  token: response.data.token,
+                  refreshToken: response.data.refreshToken,
+                  accountId: response.data.account.accountId
                 }
-                storeAccount.account = response.data
+                // storeAccount.user = response.data.token
+                console.log(this.user)
                 this.router.push('/tabs/home')
-                console.log(storeAccount.account)
+                // console.log(storeAccount.account)
+                // console.log(this.user)
             })
             .catch(function (error) {
                 console.log(error)
@@ -56,8 +55,15 @@ export const useStoreAuth = defineStore('storeAuth', {
         })
           .then((response) => {
             console.log(response.data)
-            storeAccount.account = response.data
-            storeScan.getScannedProductsByAccountId(storeAccount.account.accountId)
+            // storeAccount.account = response.data.account
+
+            this.user = { 
+              token: response.data.token,
+              refreshToken: response.data.refreshToken,
+              accountId: response.data.account.accountId
+            }
+
+            // storeScan.getScannedProductsByAccountId(storeAccount.account.accountId)
             this.router.push('/tabs/home')
           })
           .catch(function (error) {
@@ -87,6 +93,12 @@ export const useStoreAuth = defineStore('storeAuth', {
            .catch(function (error) {
             console.log(error)
           })
+      },
+      logout() {
+        this.user = []
+        this.registerData = {}
+        this.responseMessage = {}
+        this.router.push('/')
       }
     }
   })

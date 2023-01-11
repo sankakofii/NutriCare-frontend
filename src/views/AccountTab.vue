@@ -2,7 +2,12 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Account</ion-title>
+        <div class="toolbar-title">
+          <ion-title>Account</ion-title>
+        </div>
+        <div class="toolbar-logout-icon-box">
+          <ion-icon size="large" :icon="logOut" @click="storeAuth.logout()" class="toolbar-add-icon" />
+        </div>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
@@ -55,12 +60,14 @@
 
 <script setup>
 import { defineComponent } from 'vue';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
-import { create } from 'ionicons/icons';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon, onIonViewWillEnter } from '@ionic/vue';
 import { useStoreAccount } from '@/stores/storeAccount'
 import { useRouter } from 'vue-router';
+import { create, logOut } from 'ionicons/icons'
+import { useStoreAuth } from '@/stores/storeAuth';
 
 const storeAccount = useStoreAccount()
+const storeAuth = useStoreAuth()
 const route = useRouter()
 
 const allergyIconFunc = () => {
@@ -70,6 +77,11 @@ const allergyIconFunc = () => {
 const intoleranceIconFunc = () => {
   route.push('/tabs/account/intolerances')
 }
+
+onIonViewWillEnter(( ) => {
+  storeAccount.getIntoleranceList()
+  storeAccount.getAllergyList()
+})
 
 </script>
 
@@ -124,5 +136,19 @@ const intoleranceIconFunc = () => {
   .account-aller-into-header-icon {
     height: 24px;
     width: 24px;
+  }
+
+  .toolbar-logout-icon-box {
+  float: right;
+  }
+
+  .toolbar-logout-icon {
+    align-content: right;
+  }
+
+
+
+  .toolbar-add-icon {
+    align-content: right;
   }
 </style>

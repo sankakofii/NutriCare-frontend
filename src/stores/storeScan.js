@@ -1,11 +1,13 @@
 import { defineStore } from 'pinia'
 
 import { HTTP } from '@/api/config.js'
+import { useStoreAuth } from './storeAuth'
 
+const storeAuth = useStoreAuth()
 
 const config = {
   headers: {
-    
+    Authorization: `bearer ${storeAuth.user.token}`
   },
 }
 
@@ -13,7 +15,7 @@ const config = {
 export const useStoreScan = defineStore('storeScan', {
   state: () => {
     return {
-      scan_response: [],
+      scan_response: {},
       getted_product: {},
       scanList: []
     }
@@ -21,10 +23,10 @@ export const useStoreScan = defineStore('storeScan', {
   actions: {
     scanProduct(barcode) {
       console.log("started")
-        HTTP.get(`Scans/get_product_info?barcode=${barcode}`, config)
+        HTTP.get(`Scans/get_product_info?barcode=${barcode}&AccountId=${storeAuth.user.accountId}`, config)
           .then((response) => {
-            this.scan_response.push(response.data)
-            this.last_scan = response.data
+            this.scan_response = response.data
+            this.getted_product = response.data
             this.router.replace(`product/${barcode}`)
             console.log(this.scan_response)
           })
@@ -43,8 +45,8 @@ export const useStoreScan = defineStore('storeScan', {
           console.log(error)
         })
     },
-    getScannedProductsByAccountId(account_id) {
-      HTTP.get(`Scans/scan_histories_of_account?account_id=${account_id}`, config)
+    getScannedProductsByAccountId() {
+      HTTP.get(`Scans/scan_histories_of_account?account_id=${storeAuth.user.accountId}`, config)
         .then((response) => {
           this.scanList = response.data
           console.log(this.scanList)

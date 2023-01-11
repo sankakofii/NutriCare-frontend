@@ -6,7 +6,7 @@
           <ion-title>Allergies</ion-title>
         </div>
         <div class="toolbar-add-icon-box">
-          <ion-icon size="large" :icon="add" @click="crtAllergy()" class="toolbar-add-icon" />
+          <ion-icon size="large" :icon="add" @click="presentAlert()" class="toolbar-add-icon" />
         </div>
       </ion-toolbar>
     </ion-header>
@@ -15,7 +15,7 @@
             <ion-list v-for="allergy in storeAccount.account.allergies" :key="allergy.type">
             <div class="item">
                 <p class="item-type">{{ allergy.type }}</p>
-                <ion-button class="item-delete-button" color="danger" @click="delAllergy()">Delete</ion-button>
+                <ion-button class="item-delete-button" color="danger" @click="storeAccount.deleteAllergy(allergy.allergyId)">Delete</ion-button>
             </div>
             </ion-list>
         </div>
@@ -25,18 +25,42 @@
 
 
 <script setup>
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonButton, onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonButton, alertController, onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
 import { add } from 'ionicons/icons'
 import { useStoreAccount } from '@/stores/storeAccount.js'
 
 const storeAccount = useStoreAccount()
 
-const crtAllergy = () => {
-  storeAccount.createAllergy()
-}
+onIonViewWillEnter(( ) => {
+  storeAccount.getAllergyList()
+})
 
-const delAllergy = () => {
-    storeAccount.deleteAllergy()
+const AllergyList = storeAccount.allergies
+
+const presentAlert = async () => {
+  const input = {data: []};
+  console.log(AllergyList)
+  AllergyList.forEach(element => {
+    input.data.push({type: 'radio', label: element.type, value: element.allergyId})
+  });
+
+  console.log(input)
+  const alert = await alertController.create({
+    header: 'Select allergy',
+    buttons: [
+      {
+        text: 'Cancel'
+      },
+      {
+        text: 'Ok',
+        handler: (data) => {
+          storeAccount.setAllergy(data)
+        }
+      }],
+    inputs: input.data
+    });
+
+  await alert.present();
 }
 
 
