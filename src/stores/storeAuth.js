@@ -11,10 +11,11 @@ const storeScan = useStoreScan()
 
 const config = {
   headers: {
-    
+    NCApiKey: `9753a148-1261-4238-8dfc-89a91d834f4e`
   },
 }
 
+HTTP.defaults.headers['NCApiKey'] = process.env.NC_APP_API_KEY
 
 
 export const useStoreAuth = defineStore('storeAuth', {
@@ -30,7 +31,7 @@ export const useStoreAuth = defineStore('storeAuth', {
         HTTP.post('Auth/login', {
             email: credentials.email,
             password: credentials.password
-        })
+        }, config)
             .then((response) => {
                 console.log(response)
                 console.log(response.data)
@@ -71,8 +72,6 @@ export const useStoreAuth = defineStore('storeAuth', {
             .catch(function (error) {
               console.log(error)
             })
-            
-
       },
       verifyCode() {
         HTTP.post(`PhoneService/verify_code?codeFromSMS=${this.registerData.verificationCode}&phoneNumber=%2B${this.registerData.phoneNumber.toString()}`)

@@ -43,8 +43,10 @@ export const useStoreAccount = defineStore('storeAccount', {
       },
       deleteIntolerance(id) {
         HTTP.delete(`Accounts/intolerances/remove_intolerance`, {
-          accountId: this.account.accountId,
-          intoleranceId: id
+          data: {
+            accountId: this.account.accountId,
+            intoleranceId: id
+          }
         })
         .then((response) => {
           console.log(response.data)
