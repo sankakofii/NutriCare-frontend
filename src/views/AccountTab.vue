@@ -2,12 +2,10 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <div class="toolbar-title">
-          <ion-title>Account</ion-title>
-        </div>
-        <div class="toolbar-logout-icon-box">
+        <ion-title>Account</ion-title>
+        <ion-buttons slot="end">
           <ion-icon size="large" :icon="logOut" @click="storeAuth.logout()" class="toolbar-add-icon" />
-        </div>
+        </ion-buttons>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
@@ -23,6 +21,7 @@
             <p>Email: {{ storeAccount.account?.email }}</p>
             <p>Phone number: {{ storeAccount.account?.phoneNumber }}</p>
           </div>
+          <ion-icon class="edit-account-icon" :icon="create" @click="editAccount()" />
         </div>
         <div class="account-allergens-info">
           <div class="allergens">
@@ -78,6 +77,10 @@ const intoleranceIconFunc = () => {
   route.push('/tabs/account/intolerances')
 }
 
+const editAccount = () => {
+  route.push('/tabs/account/edit')
+}
+
 onIonViewWillEnter(( ) => {
   storeAccount.getIntoleranceList()
   storeAccount.getAllergyList()
@@ -86,7 +89,6 @@ onIonViewWillEnter(( ) => {
 </script>
 
 <style scoped>
-
   .account-info {
     display: flex;
     background: gray;
@@ -111,6 +113,21 @@ onIonViewWillEnter(( ) => {
     font-size: 20px;
     padding-left: 10px;
     width: 50%;
+  }
+
+  /* .edit-account-box {
+    position: relative;
+    top:0;
+    right:0;
+  } */
+
+  .edit-account-icon {
+    position: absolute;
+    right:0;
+    width: 24px;
+    height: 24px;
+    padding-right: 7px;
+    padding-top: 5px;
   }
 
   .allergy-item {
@@ -139,7 +156,7 @@ onIonViewWillEnter(( ) => {
   }
 
   .toolbar-logout-icon-box {
-  float: right;
+    float: right;
   }
 
   .toolbar-logout-icon {

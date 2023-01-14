@@ -5,25 +5,23 @@
         <ion-title>Scanned Products</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <div v-if=storeScan.scanList>
-          <ion-list v-for="product in storeScan.scanList" :key="product.code">
-            <div class="item">
-              <p class="scan-time">Scan time: {{ product.scanTime }}</p>
-              <ion-button class="item-button" :router-link="`product/${product.code}`">{{ product.product.product_name }}</ion-button>
-              <div class="item-image-box">
-                <div class="item-image">
-                  <img v-bind:src="product.product.image_front_url"/>
-                </div>
+    <ion-content>
+      <div v-if=storeScan.scanList>
+        <ion-list v-for="product in storeScan.scanList" :key="product.code">
+          <div class="item">
+            <p class="scan-time">Scan time: {{ product.scanTime }}</p>
+            <ion-button class="item-button" :router-link="`product/${product.code}`">{{ product.product.product_name }}</ion-button>
+            <div class="item-image-box">
+              <div class="item-image">
+                <img v-bind:src="product.product.image_front_url"/>
               </div>
             </div>
-          </ion-list>
-        </div>
-        <div v-else class="else-box">
-          <h1 class="else-text">Here you will be able to see your scanned products!</h1>
-        </div>
-      </ion-header>
+          </div>
+        </ion-list>
+      </div>
+      <div v-else class="else-box">
+        <h1 class="else-text">Here you will be able to see your scanned products!</h1>
+      </div>
     </ion-content>
   </ion-page>
 </template>

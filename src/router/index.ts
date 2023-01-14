@@ -36,6 +36,10 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/AccountIntoleranceTab.vue')
       },
       {
+        path: 'account/edit',
+        component: () => import('@/views/EditAccountTab.vue')
+      },
+      {
         path: 'product/:barcode',
         component: () => import('@/views/ProductPage.vue')
       }

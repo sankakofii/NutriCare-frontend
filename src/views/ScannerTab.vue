@@ -2,10 +2,6 @@
   <ion-page>
     <ion-content class="scanner-tab" :fullscreen="true">
       <!-- <div class="loading-text" v-if="load"><p class="loading-text-vertical">Loading...</p></div> -->
-      <div class="scanner">
-        <ion-button @click="startScan">Start</ion-button>
-        <ion-button @click="stopScan">Stop</ion-button>
-      </div>
     </ion-content>
     
   </ion-page>
@@ -14,23 +10,43 @@
 <script setup>
 
 import { ref } from 'vue';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, onIonViewWillEnter, onIonViewDidEnter } from '@ionic/vue';
 import { useStoreScan } from '@/stores/storeScan.js'
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 
 const text = ref("");
-const stop = ref(false)
 const id = ref(null)
-const load = ref(true)
+const scanActive = ref(false)
 
 const storeScan = useStoreScan()
 
+onIonViewWillEnter(( ) => {
+  BarcodeScanner.prepare()
+})
+
+onIonViewDidEnter(() => {
+  startScan()
+})
+
+
 
 const startScan = async () => {
+  document.querySelector('body').classList.add('scanner-active');
+  // Check camera permission
+  // This is just a simple example, check out the better checks below
+  await BarcodeScanner.checkPermission({ force: true });
+
+  // make background of WebView transparent
+  // note: if you are using ionic this might not be enough, check below
   BarcodeScanner.hideBackground();
-  const result = await BarcodeScanner.startScan();
+
+  const result = await BarcodeScanner.startScan(); // start scanning and wait for a result
+
+  // if the result has content
   if (result.hasContent) {
-    console.log(result.content);
+    console.log(result.content); // log the raw scanned content
+    storeScan.scanProduct(result.content)
+    stopScan()
   }
 };
 
@@ -39,11 +55,25 @@ const stopScan = () => {
   BarcodeScanner.stopScan();
 };
 
+// const checkPermision = () => {
+//   const status = await BarcodeScanner.checkPermission({force: true})
+//   if(status.granted){
+//     return true
+//   }
+//   return false
+// };
+
 
   
 </script>
 
 <style scoped>
+  ion-content {
+      --background: #00000000;
+      --ion-color-base: transparent;
+      --ion-background-color: transparent;
+  }
+
   .loading-text {
     width: 100%;
     height: 100%;

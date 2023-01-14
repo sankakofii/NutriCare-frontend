@@ -2,12 +2,10 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <div class="toolbar-title">
-          <ion-title>Intolerances</ion-title>
-        </div>
-        <div class="toolbar-add-icon-box">
+        <ion-title>Intolerances</ion-title>
+        <ion-buttons slot="end">
           <ion-icon size="large" :icon="add" @click="presentAlert()" class="toolbar-add-icon" />
-        </div>
+        </ion-buttons>
       </ion-toolbar>
     </ion-header>
     <ion-content>

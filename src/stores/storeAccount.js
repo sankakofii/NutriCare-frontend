@@ -108,6 +108,21 @@ export const useStoreAccount = defineStore('storeAccount', {
         .catch(function (error) {
           console.log(error)
       })
+      },
+      editAccountById(newFirstName, newLastName) {
+        HTTP.put(`Accounts/`, {
+          accountId: this.account.accountId,
+          firstName: newFirstName,
+          lastName: newLastName
+        }, config)
+        .then((response) => {
+          console.log(response)
+          this.getAccountById()
+          this.router.replace(`/tabs/account`)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
       }
     }
   })
