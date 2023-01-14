@@ -1,12 +1,10 @@
 <template>
   <ion-page>
     <ion-content class="scanner-tab" :fullscreen="true">
-      <div class="loading-text" v-if="load"><p class="loading-text-vertical">Loading...</p></div>
-      <div class="scanner" v-if="!stop">
-        <StreamBarcodeReader class="scan"
-            @decode="(a, b, c) => onDecode(a, b, c)"
-            @loaded="() => onLoaded()"
-        ></StreamBarcodeReader>
+      <!-- <div class="loading-text" v-if="load"><p class="loading-text-vertical">Loading...</p></div> -->
+      <div class="scanner">
+        <ion-button @click="startScan">Start</ion-button>
+        <ion-button @click="stopScan">Stop</ion-button>
       </div>
     </ion-content>
     
@@ -17,8 +15,8 @@
 
 import { ref } from 'vue';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
-import { StreamBarcodeReader } from "vue-barcode-reader";
 import { useStoreScan } from '@/stores/storeScan.js'
+import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 
 const text = ref("");
 const stop = ref(false)
@@ -27,25 +25,20 @@ const load = ref(true)
 
 const storeScan = useStoreScan()
 
-const onDecode = (a, b, c) => {
-  console.log(a, b, c);
-  text.value = a;
-  console.log('almost')
-  storeScan.scanProduct(a)
-  stop.value = true
-  console.log('passed')
-  if (id.value) clearTimeout(id.value);
-  id.value = setTimeout(() => {
-    if (text.value === a) {
-      text.value = "";
-    }
-  }, 5000);
-}
 
-const onLoaded = () => {
-  load.value = false;
-  console.log("load");
-}
+const startScan = async () => {
+  BarcodeScanner.hideBackground();
+  const result = await BarcodeScanner.startScan();
+  if (result.hasContent) {
+    console.log(result.content);
+  }
+};
+
+const stopScan = () => {
+  BarcodeScanner.showBackground();
+  BarcodeScanner.stopScan();
+};
+
 
   
 </script>
