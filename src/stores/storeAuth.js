@@ -3,14 +3,6 @@ import { useStorage } from '@vueuse/core'
 
 import { HTTP } from '@/api/config.js'
 
-// import { useStoreAccount } from '@/stores/storeAccount.js'
-// import { useStoreScan } from '@/stores/storeScan.js'
-
-
-// const storeAccount = useStoreAccount()
-// const storeScan = useStoreScan()
-
-
 export const useStoreAuth = defineStore('storeAuth', {
     state: () => {
       return {
@@ -45,7 +37,7 @@ export const useStoreAuth = defineStore('storeAuth', {
                 console.log(error)
             })
       },
-      register(registerData) {
+      register() {
         HTTP.post('Auth/register', {
           email: this.registerData.email,
           password: this.registerData.password,
@@ -63,8 +55,10 @@ export const useStoreAuth = defineStore('storeAuth', {
               accountId: response.data.account.accountId
             }
 
+            console.log(this.user)
             // storeScan.getScannedProductsByAccountId(storeAccount.account.accountId)
             this.router.push('/tabs/home')
+            // this.router.push('/login')
           })
           .catch(function (error) {
             console.log(error)
@@ -95,7 +89,7 @@ export const useStoreAuth = defineStore('storeAuth', {
           })
       },
       logout() {
-        this.user = []
+        this.user = {}
         this.registerData = {}
         this.responseMessage = {}
         this.router.push('/')

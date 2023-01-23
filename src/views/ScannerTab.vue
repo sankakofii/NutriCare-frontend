@@ -9,14 +9,15 @@
 
 <script setup>
 
-import { ref } from 'vue';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, onIonViewWillEnter, onIonViewDidEnter } from '@ionic/vue';
+// import { ref } from 'vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, onIonViewWillEnter, onIonViewDidEnter, onIonViewWillLeave } from '@ionic/vue';
 import { useStoreScan } from '@/stores/storeScan.js'
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 
-const text = ref("");
-const id = ref(null)
-const scanActive = ref(false)
+
+// const text = ref("");
+// const id = ref(null)
+// const scanActive = ref(false)
 
 const storeScan = useStoreScan()
 
@@ -28,12 +29,16 @@ onIonViewDidEnter(() => {
   startScan()
 })
 
+onIonViewWillLeave(( ) => {
+  document.querySelector('body').classList.remove('scanner-active');
+})
+
 
 
 const startScan = async () => {
+  //fix for barcodescanner.hideBackground()
   document.querySelector('body').classList.add('scanner-active');
   // Check camera permission
-  // This is just a simple example, check out the better checks below
   await BarcodeScanner.checkPermission({ force: true });
 
   // make background of WebView transparent

@@ -17,7 +17,7 @@
         </ion-content>
         <ion-footer>
             <div class="register-button-link-box">
-              <ion-button class="register-next-button" :router-link="`/tabs/home`" @click="storeAuth.register()">Register</ion-button>
+              <ion-button class="register-next-button" @click="register">Register</ion-button>
             </div>
         </ion-footer>
     </ion-page>
@@ -28,6 +28,15 @@ import { IonPage, IonContent, IonInput, IonLabel, IonButton, IonImg, IonItem, Io
 import { useStoreAuth } from '@/stores/storeAuth'
 
 const storeAuth = useStoreAuth()
+
+// onIonViewWillLeave(() => {
+
+// })
+
+const register = () => {
+  storeAuth.register()
+}
+
 </script>
 
 <style lang="scss" scoped>

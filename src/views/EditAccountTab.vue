@@ -8,28 +8,28 @@
 
     <ion-content :fullscreen="true">
       <ion-grid fixed no-padding>
-      <ion-row>
-        <ion-col size="12" padding>
+        <ion-row>
+          <ion-col size="12" padding>
 
-          <ion-list margin-bottom>
-            <ion-list-header color="light">
-              <ion-label class="fw700">Form</ion-label>
-            </ion-list-header>
+            <ion-list margin-bottom>
+              <ion-list-header color="light">
+                <ion-label class="fw700">Form</ion-label>
+              </ion-list-header>
 
-            <ion-item>
-              <ion-label color="dark" position="stacked">First Name:</ion-label>
-              <ion-input v-model="editData.newFirstName" placeholder="Ex..: Joe"></ion-input>
-            </ion-item>
+              <ion-item>
+                <ion-label color="dark" position="stacked">First Name:</ion-label>
+                <ion-input v-model="editData.newFirstName" placeholder="Ex..: Joe"></ion-input>
+              </ion-item>
 
-            <ion-item>
-              <ion-label color="dark" position="stacked">Last Name:</ion-label>
-              <ion-input v-model="editData.newLastName" placeholder="Ex.: Mama"></ion-input>
-            </ion-item>
-          </ion-list>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    <ion-button size="large" expand="full" color="dark" @click="edit" no-margin>Edit</ion-button>
+              <ion-item>
+                <ion-label color="dark" position="stacked">Last Name:</ion-label>
+                <ion-input v-model="editData.newLastName" placeholder="Ex.: Mama"></ion-input>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-button size="large" expand="full" color="dark" @click="edit" no-margin>Edit</ion-button>
     </ion-content>
   </ion-page>
 </template>
